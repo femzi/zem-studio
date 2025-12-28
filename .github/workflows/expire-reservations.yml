@@ -1,0 +1,19 @@
+name: Expire Reservations
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # every 15 minutes
+
+jobs:
+  expire:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Curl expire endpoint
+        env:
+          EXPIRE_URL: ${{ secrets.EXPIRE_URL }}
+        run: |
+          if [ -z "$EXPIRE_URL" ]; then
+            echo "EXPIRE_URL not set - skipping"
+            exit 0
+          fi
+          curl -X POST "$EXPIRE_URL" -H "Content-Type: application/json" -sS

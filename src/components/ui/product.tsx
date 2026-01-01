@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import StockBadge from "./stock-badge";
 
 interface ProductProps {
   id: string;
@@ -38,9 +37,6 @@ function Product({ id, image, title, price, alt }: ProductProps) {
                         NGN{' '}
                         {typeof price === 'number' ? price.toFixed(2) : price}
                     </p>
-                    <div className="mt-2">
-                        <StockBadge id={id} />
-                    </div>
                 </div>
             </div>
         </Link>

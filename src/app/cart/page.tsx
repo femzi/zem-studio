@@ -19,14 +19,24 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
     const [cartItems, setCartItems] = useState<any[]>([]);
+    const [selected, setSelected] = useState<Record<string, boolean>>({});
+    const router = useRouter();
 
     useEffect(() => {
         const loadCart = () => {
             const cart = JSON.parse(localStorage.getItem("cart") || "[]");
             setCartItems(cart);
+            // initialize selected map (default: all selected)
+            const initialSelected: Record<string, boolean> = {};
+            cart.forEach((item: any) => {
+                const key = `${item.id}-${item.size}`;
+                initialSelected[key] = true;
+            });
+            setSelected(initialSelected);
         };
 
         loadCart();
@@ -69,6 +79,9 @@ export default function CartPage() {
         (sum, item) => sum + item.price * item.quantity,
         0
     );
+    const selectedSubtotal = cartItems
+        .filter((item) => selected[`${item.id}-${item.size}`])
+        .reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     const emptyCart = (
         <>
@@ -94,6 +107,22 @@ export default function CartPage() {
             <Table>
                 <TableHeader>
                     <TableRow className="font-mono">
+                        <TableHead>
+                            <input
+                                type="checkbox"
+                                checked={
+                                    cartItems.length > 0 && cartItems.every((item) => selected[`${item.id}-${item.size}`])
+                                }
+                                onChange={(e) => {
+                                    const checked = e.target.checked;
+                                    const newSel: Record<string, boolean> = {};
+                                    cartItems.forEach((item) => {
+                                        newSel[`${item.id}-${item.size}`] = checked;
+                                    });
+                                    setSelected(newSel);
+                                }}
+                            />
+                        </TableHead>
                         <TableHead>Product</TableHead>
                         <TableHead>Price</TableHead>
                         <TableHead>Quantity</TableHead>
@@ -104,6 +133,16 @@ export default function CartPage() {
                 <TableBody>
                     {cartItems.map((item, index) => (
                         <TableRow key={`${item.id}-${item.size}-${index}`}>
+                            <TableCell>
+                                <input
+                                    type="checkbox"
+                                    checked={!!selected[`${item.id}-${item.size}`]}
+                                    onChange={(e) => {
+                                        const key = `${item.id}-${item.size}`;
+                                        setSelected((prev) => ({ ...prev, [key]: e.target.checked }));
+                                    }}
+                                />
+                            </TableCell>
                             <TableCell>
                                 <div className="flex items-center gap-4">
                                     <div className="w-20 h-20 relative">
@@ -183,14 +222,22 @@ export default function CartPage() {
                         <div className="flex justify-between text-lg font-semibold mb-4">
                             <span>Subtotal:</span>
                             <span className="font-mono">
-                                NGN {subtotal.toFixed(2)}
+                                NGN {selectedSubtotal.toFixed(2)}
                             </span>
                         </div>
-                        <Link href={"/checkout"}>
-                            <Button className="w-full bg-amber-500 text-white tracking-widest rounded-none uppercase font-mono py-3 hover:bg-white hover:text-black">
-                                Proceed to Checkout
-                            </Button>
-                        </Link>
+                        <Button
+                            onClick={() => {
+                                const selectedItems = cartItems.filter((item) => selected[`${item.id}-${item.size}`]);
+                                if (selectedItems.length === 0) {
+                                    alert("Please select at least one item to checkout.");
+                                    return;
+                                }
+                                localStorage.setItem("checkoutSelectedItems", JSON.stringify(selectedItems));
+                                router.push("/checkout");
+                            }}
+                            className="w-full bg-amber-500 text-white tracking-widest rounded-none uppercase font-mono py-3 hover:bg-white hover:text-black">
+                            Proceed to Checkout
+                        </Button>
                         <Link href={"/"}>
                             <Button
                                 variant="outline"

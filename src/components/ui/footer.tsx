@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 import {
     XLogoIcon,
     FacebookLogoIcon,
@@ -17,7 +18,7 @@ function Footer() {
                     <div className="flex items-center mb-4 md:mb-0">
                         <Link href="/" className="flex items-center justify-center group">
                             <div className="flex items-center gap-3 transition-transform duration-200 group-hover:scale-105">
-                                <p className="inline whitespace-nowrap text-gray-900 dark:text-white font-semibold tracking-wide">Zem Studio</p>
+                                <Image src="/zem-t.JPG" alt="Zem Studio" width={60} height={30} className="object-contain" />
                             </div>
                         </Link>
                     </div>

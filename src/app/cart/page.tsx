@@ -30,12 +30,7 @@ export default function CartPage() {
         const loadCart = () => {
             const cart = JSON.parse(localStorage.getItem("cart") || "[]");
             setCartItems(cart);
-            // initialize selection map
-            const sel: Record<string, boolean> = {};
-            cart.forEach((item: any) => {
-                sel[`${item.id}-${item.size}`] = true;
-            });
-            setSelected(sel);
+ 
         };
 
         loadCart();
@@ -87,6 +82,9 @@ export default function CartPage() {
         (sum, item) => sum + item.price * item.quantity,
         0
     );
+    const selectedSubtotal = cartItems
+        .filter((item) => selected[`${item.id}-${item.size}`])
+        .reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     const emptyCart = (
         <>
@@ -116,17 +114,7 @@ export default function CartPage() {
                             <input
                                 type="checkbox"
                                 checked={
-                                    cartItems.length > 0 &&
-                                    cartItems.every((it) => selected[`${it.id}-${it.size}`])
-                                }
-                                onChange={(e) => {
-                                    const checked = e.target.checked;
-                                    const next: Record<string, boolean> = {};
-                                    cartItems.forEach((it) => {
-                                        next[`${it.id}-${it.size}`] = checked;
-                                    });
-                                    setSelected(next);
-                                }}
+ 
                             />
                         </TableHead>
                         <TableHead>Product</TableHead>
@@ -143,12 +131,7 @@ export default function CartPage() {
                                 <input
                                     type="checkbox"
                                     checked={!!selected[`${item.id}-${item.size}`]}
-                                    onChange={(e) =>
-                                        setSelected((s) => ({
-                                            ...s,
-                                            [`${item.id}-${item.size}`]: e.target.checked,
-                                        }))
-                                    }
+ 
                                 />
                             </TableCell>
                             <TableCell>
@@ -230,29 +213,11 @@ export default function CartPage() {
                         <div className="flex justify-between text-lg font-semibold mb-4">
                             <span>Subtotal:</span>
                             <span className="font-mono">
-                                NGN {subtotal.toFixed(2)}
+                                NGN {selectedSubtotal.toFixed(2)}
                             </span>
                         </div>
                         <Button
-                            className="w-full bg-amber-500 text-white tracking-widest rounded-none uppercase font-mono py-3 hover:bg-white hover:text-black mb-2"
-                            onClick={() => {
-                                // gather selected items
-                                const selectedItems = cartItems.filter((it) =>
-                                    selected[`${it.id}-${it.size}`]
-                                );
-                                localStorage.setItem(
-                                    "checkoutItems",
-                                    JSON.stringify(selectedItems)
-                                );
-                                router.push("/checkout");
-                            }}>
-                            Checkout Selected
-                        </Button>
-                        <Link href={"/checkout"}>
-                            <Button className="w-full bg-amber-500 text-white tracking-widest rounded-none uppercase font-mono py-3 hover:bg-white hover:text-black">
-                                Proceed to Checkout (All)
-                            </Button>
-                        </Link>
+ 
                         <Link href={"/"}>
                             <Button
                                 variant="outline"

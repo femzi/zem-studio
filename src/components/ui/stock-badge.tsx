@@ -1,46 +1,9 @@
-"use client";
+import React from "react";
 
-import React, { useEffect, useState } from "react";
-
-interface Props {
-  id: string;
+interface StockBadgeProps {
+  inStock?: boolean;
+  quantity?: number;
 }
 
-export default function StockBadge({ id }: Props) {
-  const [available, setAvailable] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    let mounted = true;
-    async function load() {
-      setLoading(true);
-      try {
-        const res = await fetch(`/api/products/stock?id=${encodeURIComponent(id)}`);
-        if (!res.ok) throw new Error("Failed to load stock");
-        const json = await res.json();
-        if (!mounted) return;
-        setAvailable(typeof json.available === "number" ? json.available : 0);
-      } catch (e) {
-        console.error("Stock fetch error", e);
-        if (mounted) setAvailable(0);
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    }
-    load();
-    return () => {
-      mounted = false;
-    };
-  }, [id]);
-
-  if (loading) return <p className="text-sm text-gray-500 dark:text-gray-400">Checking stock…</p>;
-  if (available === null) return null;
-
-  if (available > 0) {
-    return (
-      <p className="text-sm font-medium text-green-700 dark:text-green-400">In stock</p>
-    );
-  }
-
-  return null;
+ 
 }

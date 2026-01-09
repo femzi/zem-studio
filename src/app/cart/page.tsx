@@ -19,14 +19,23 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
     const [cartItems, setCartItems] = useState<any[]>([]);
+    const [selected, setSelected] = useState<Record<string, boolean>>({});
+    const router = useRouter();
 
     useEffect(() => {
         const loadCart = () => {
             const cart = JSON.parse(localStorage.getItem("cart") || "[]");
             setCartItems(cart);
+            // initialize selection map
+            const sel: Record<string, boolean> = {};
+            cart.forEach((item: any) => {
+                sel[`${item.id}-${item.size}`] = true;
+            });
+            setSelected(sel);
         };
 
         loadCart();
@@ -53,6 +62,15 @@ export default function CartPage() {
 
         setCartItems(updatedCart);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
+        // update selection map to remove any deselected items if removed
+        const key = `${id}-${size}`;
+        setSelected((s) => {
+            const copy = { ...s };
+            if (!updatedCart.find((it) => `${it.id}-${it.size}` === key)) {
+                delete copy[key];
+            }
+            return copy;
+        });
         window.dispatchEvent(new Event("storage"));
     };
 
@@ -94,6 +112,23 @@ export default function CartPage() {
             <Table>
                 <TableHeader>
                     <TableRow className="font-mono">
+                        <TableHead>
+                            <input
+                                type="checkbox"
+                                checked={
+                                    cartItems.length > 0 &&
+                                    cartItems.every((it) => selected[`${it.id}-${it.size}`])
+                                }
+                                onChange={(e) => {
+                                    const checked = e.target.checked;
+                                    const next: Record<string, boolean> = {};
+                                    cartItems.forEach((it) => {
+                                        next[`${it.id}-${it.size}`] = checked;
+                                    });
+                                    setSelected(next);
+                                }}
+                            />
+                        </TableHead>
                         <TableHead>Product</TableHead>
                         <TableHead>Price</TableHead>
                         <TableHead>Quantity</TableHead>
@@ -104,6 +139,18 @@ export default function CartPage() {
                 <TableBody>
                     {cartItems.map((item, index) => (
                         <TableRow key={`${item.id}-${item.size}-${index}`}>
+                            <TableCell>
+                                <input
+                                    type="checkbox"
+                                    checked={!!selected[`${item.id}-${item.size}`]}
+                                    onChange={(e) =>
+                                        setSelected((s) => ({
+                                            ...s,
+                                            [`${item.id}-${item.size}`]: e.target.checked,
+                                        }))
+                                    }
+                                />
+                            </TableCell>
                             <TableCell>
                                 <div className="flex items-center gap-4">
                                     <div className="w-20 h-20 relative">
@@ -186,9 +233,24 @@ export default function CartPage() {
                                 NGN {subtotal.toFixed(2)}
                             </span>
                         </div>
+                        <Button
+                            className="w-full bg-amber-500 text-white tracking-widest rounded-none uppercase font-mono py-3 hover:bg-white hover:text-black mb-2"
+                            onClick={() => {
+                                // gather selected items
+                                const selectedItems = cartItems.filter((it) =>
+                                    selected[`${it.id}-${it.size}`]
+                                );
+                                localStorage.setItem(
+                                    "checkoutItems",
+                                    JSON.stringify(selectedItems)
+                                );
+                                router.push("/checkout");
+                            }}>
+                            Checkout Selected
+                        </Button>
                         <Link href={"/checkout"}>
                             <Button className="w-full bg-amber-500 text-white tracking-widest rounded-none uppercase font-mono py-3 hover:bg-white hover:text-black">
-                                Proceed to Checkout
+                                Proceed to Checkout (All)
                             </Button>
                         </Link>
                         <Link href={"/"}>

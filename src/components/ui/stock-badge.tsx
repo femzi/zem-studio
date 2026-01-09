@@ -36,21 +36,11 @@ export default function StockBadge({ id }: Props) {
   if (loading) return <p className="text-sm text-gray-500 dark:text-gray-400">Checking stock…</p>;
   if (available === null) return null;
 
-  if (available <= 0) {
-    return <p className="text-sm font-medium text-red-600 dark:text-red-400">Out of stock</p>;
-  }
-
-  if (available <= 5) {
+  if (available > 0) {
     return (
-      <p className="text-sm font-medium text-amber-600 dark:text-amber-400">
-        {available === 1 ? "Only 1 left" : `Only ${available} left`}
-      </p>
+      <p className="text-sm font-medium text-green-700 dark:text-green-400">In stock</p>
     );
   }
 
-  return (
-    <p className="text-sm font-medium text-green-700 dark:text-green-400">
-      {available === 1 ? "1 in stock" : `${available} in stock`}
-    </p>
-  );
+  return null;
 }

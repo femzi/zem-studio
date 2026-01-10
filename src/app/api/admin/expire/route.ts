@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import expireReservations from "@/server/expire-reservations";
-import verifyPassword from "@/server/verify-password";
+import expireReservations from "../../../../server/expire-reservations";
+import verifyPassword from "../../../../server/verify-password";
 
 export async function POST(req: Request) {
     try {

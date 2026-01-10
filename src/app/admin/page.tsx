@@ -7,8 +7,7 @@ import OrderCard from "@/components/ui/order-card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MagnifyingGlassIcon, XIcon, LockKeyIcon } from "@phosphor-icons/react";
-import listOrders from "@/server/list-orders";
-import verifyPassword from "@/server/verify-password";
+// Server operations are executed via API endpoints
 import {
     Sheet,
     SheetContent,
@@ -45,7 +44,8 @@ export default function AdminPage() {
     useEffect(() => {
         if (!isAuthenticated) return;
         setLoading(true);
-        listOrders({ page })
+        fetch(`/api/admin/orders?page=${page}`)
+            .then((r) => r.json())
             .then((res) => {
                 setOrders(res.orders?.rows || []);
             })
@@ -59,8 +59,12 @@ export default function AdminPage() {
         setError("");
 
         try {
-            const result = await verifyPassword({ password });
-            if (result.valid) {
+            const result = await fetch("/api/admin/verify", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ password }),
+            }).then((r) => r.json());
+            if (result?.valid) {
                 setIsAuthenticated(true);
             } else {
                 setError("Invalid password. Please try again.");

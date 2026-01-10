@@ -7,7 +7,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import changeOrderStatus from "@/server/change-order-status";
+// server action moved to API route; use fetch in client components
 
 interface OrderItem {
     id: string;
@@ -68,7 +68,11 @@ export default function OrderCard({
                 currentStatus.toLowerCase() === "processing"
                     ? "Processed"
                     : "Processing";
-            await changeOrderStatus({ orderId: $id, status: newStatus });
+            await fetch("/api/admin/change-status", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ orderId: $id, status: newStatus }),
+            }).then((r) => r.json());
             setCurrentStatus(newStatus);
         } catch {
             // Optionally show error

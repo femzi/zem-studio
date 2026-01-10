@@ -75,10 +75,7 @@ export default function CartPage() {
         window.dispatchEvent(new Event("storage"));
     };
 
-    const subtotal = cartItems.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-    );
+    // full cart subtotal is available if needed in future
     const selectedSubtotal = cartItems
         .filter((item) => selected[`${item.id}-${item.size}`])
         .reduce((sum, item) => sum + item.price * item.quantity, 0);

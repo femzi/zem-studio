@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LockKeyIcon } from "@phosphor-icons/react";
-import verifyPassword from "@/server/verify-password";
-import listAdminLogs from "@/server/list-admin-logs";
+// Server operations via API endpoints
 
 // Collapsible JSON tree viewer (small, no external deps)
 function JSONNode({ name, data, depth = 0 }: { name?: string; data: any; depth?: number }) {
@@ -96,7 +95,8 @@ export default function AdminLogsPage() {
     useEffect(() => {
         if (!isAuthenticated) return;
         setLoading(true);
-        listAdminLogs({ page, limit })
+        fetch(`/api/admin/logs?page=${page}&limit=${limit}`)
+            .then((r) => r.json())
             .then((res) => {
                 setLogs(res.logs?.rows || []);
                 setTotal(res.total || 0);
@@ -111,8 +111,12 @@ export default function AdminLogsPage() {
         setAuthLoading(true);
         setError("");
         try {
-            const result = await verifyPassword({ password });
-            if (result.valid) {
+            const result = await fetch("/api/admin/verify", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ password }),
+            }).then((r) => r.json());
+            if (result?.valid) {
                 setIsAuthenticated(true);
             } else {
                 setError("Invalid password");

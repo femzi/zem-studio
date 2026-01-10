@@ -18,9 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { payWithPayStack } from "../lib/utils";
-import createReservation from "@/server/create-reservation";
-import finalizeReservation from "@/server/finalize-reservation";
-import cancelReservation from "@/server/cancel-reservation";
+// server operations are performed via API endpoints
 // verifyAndCreateOrder is intentionally unused here; reservation flow is used instead
 
 export default function CheckoutPage() {
@@ -118,13 +116,17 @@ export default function CheckoutPage() {
         setIsProcessing(true);
         toast.loading("Reserving items...");
 
-        // 1) create reservation
-        const reservationRes = await createReservation({
-            items: JSON.stringify(
-                cartItems.map(({ id, size, quantity }) => ({ id, size, quantity }))
-            ),
-            holdMinutes: 15,
-        });
+        // 1) create reservation via API
+        const reservationRes = await fetch("/api/checkout/reserve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                items: JSON.stringify(
+                    cartItems.map(({ id, size, quantity }) => ({ id, size, quantity }))
+                ),
+                holdMinutes: 15,
+            }),
+        }).then((r) => r.json());
 
         if (!reservationRes || reservationRes.success === false) {
             toast.error(reservationRes?.message || "Failed to reserve items. Try again.");
@@ -142,28 +144,36 @@ export default function CheckoutPage() {
 
         try {
             // Pass reservation id in metadata so it's available in callback if needed
-            payWithPayStack(
+                        payWithPayStack(
                 total,
                 { email, firstName, lastName, tel: phone },
                 async (reference: string) => {
                     try {
                         // finalize reservation -> creates order and decrements stock
-                        const finalizeRes = await finalizeReservation({
-                            reservationId,
-                            customerName: `${firstName.charAt(0).toUpperCase() + firstName.slice(1)} ${lastName.charAt(0).toUpperCase() + lastName.slice(1)}`,
-                            phone,
-                            email,
-                            state: state.charAt(0).toUpperCase() + state.slice(1),
-                            street: address.charAt(0).toUpperCase() + address.slice(1),
-                            city: city.charAt(0).toUpperCase() + city.slice(1),
-                            zipCode,
-                        });
+                                    const finalizeRes = await fetch("/api/checkout/finalize", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({
+                                            reservationId,
+                                            customerName: `${firstName.charAt(0).toUpperCase() + firstName.slice(1)} ${lastName.charAt(0).toUpperCase() + lastName.slice(1)}`,
+                                            phone,
+                                            email,
+                                            state: state.charAt(0).toUpperCase() + state.slice(1),
+                                            street: address.charAt(0).toUpperCase() + address.slice(1),
+                                            city: city.charAt(0).toUpperCase() + city.slice(1),
+                                            zipCode,
+                                        }),
+                                    }).then((r) => r.json());
 
                         if (!finalizeRes || finalizeRes.success === false) {
                             // finalize failed — notify and cancel reservation to release stock
                             toast.error(finalizeRes?.message || "Failed to finalize order after payment. Contact support.");
                             try {
-                                await cancelReservation({ reservationId });
+                                await fetch("/api/checkout/cancel", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({ reservationId }),
+                                });
                             } catch (e) {
                                 console.error("Failed to cancel reservation after finalize failure:", e);
                             }
@@ -177,7 +187,7 @@ export default function CheckoutPage() {
 
                         toast.success(`Order placed successfully! Reference: ${reference}. Redirecting...`);
                         setTimeout(() => (window.location.href = "/"), 2000);
-                    } catch (error) {
+                                } catch (error) {
                         console.error("Error finalizing reservation:", error);
                         toast.error("Order finalized failed. Please contact support with reference: " + reference);
                         setIsProcessing(false);
@@ -187,7 +197,11 @@ export default function CheckoutPage() {
                     // Payment failed or cancelled — cancel reservation to release stock
                     toast.error(error || "Payment failed or cancelled.");
                     try {
-                        await cancelReservation({ reservationId });
+                        await fetch("/api/checkout/cancel", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ reservationId }),
+                        });
                     } catch (e) {
                         console.error("Failed to cancel reservation after payment failure:", e);
                     }
@@ -198,7 +212,11 @@ export default function CheckoutPage() {
             console.error("Payment error:", error);
             // cancel reservation if anything goes wrong
             try {
-                await cancelReservation({ reservationId });
+                await fetch("/api/checkout/cancel", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ reservationId }),
+                });
             } catch (e) {
                 console.error("Failed to cancel reservation after unexpected payment error:", e);
             }

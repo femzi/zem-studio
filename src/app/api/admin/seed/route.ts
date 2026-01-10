@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import seedProducts from "@/server/seed-products";
-import verifyPassword from "@/server/verify-password";
+import seedProducts from "../../../../server/seed-products";
+import verifyPassword from "../../../../server/verify-password";
 
 export async function POST(req: Request) {
   try {

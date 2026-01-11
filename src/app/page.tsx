@@ -9,16 +9,24 @@ export default function Home() {
         <div className="min-h-screen bg-white">
             <Header />
             {/* Hero Section */}
-            <section className="w-full bg-white border-b border-gray-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-                    <div className="space-y-6 max-w-3xl">
-                        <h1 className="text-5xl sm:text-6xl md:text-7xl font-light text-gray-900 tracking-tight">
-                            Zem Studio
-                        </h1>
-                        <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl">
+            <section className="w-full border-b border-gray-200">
+                <div 
+                    className="min-h-96 sm:min-h-[500px] flex items-center justify-center relative"
+                    style={{
+                        backgroundImage: 'url(/zem-t.JPG)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
+                >
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-black/30"></div>
+                    
+                    {/* Content */}
+                    <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                        <p className="text-lg sm:text-xl text-white leading-relaxed">
                             Premium apparel designed for the modern individual. Each piece is crafted with attention to detail and quality.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4 pt-8">
+                        <div className="flex flex-col sm:flex-row gap-4 pt-8 justify-center">
                             <a
                                 href="/catalog"
                                 className="inline-flex items-center justify-center px-8 py-3 bg-gray-900 text-white font-medium hover:bg-gray-800 transition-colors duration-200">
@@ -26,7 +34,7 @@ export default function Home() {
                             </a>
                             <a
                                 href="#featured"
-                                className="inline-flex items-center justify-center px-8 py-3 border-2 border-gray-900 text-gray-900 font-medium hover:bg-gray-900 hover:text-white transition-colors duration-200">
+                                className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-medium hover:bg-white hover:text-gray-900 transition-colors duration-200">
                                 View Featured
                             </a>
                         </div>

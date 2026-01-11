@@ -95,7 +95,7 @@ function Header() {
     };
 
     return (
-    <header className="bg-white/60 dark:bg-black/50 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 transition-all duration-300">
+        <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 relative">
                     {/* Menu Button (Mobile) */}
@@ -114,11 +114,8 @@ function Header() {
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center md:static absolute left-1/2 transform max-md:-translate-x-1/2 md:transform-none">
                         <Link href="/" className="flex items-center justify-center group">
-                            <div className="flex items-center gap-3 transition-transform duration-200 group-hover:scale-105">
-                                <div className="hidden md:flex flex-col">
-                                    <p className="mt-0 text-gray-900 dark:text-white font-semibold text-lg tracking-wide whitespace-nowrap">Zem Studio</p>
-                                    <span className="text-xs text-gray-600 dark:text-gray-400">premium apparel</span>
-                                </div>
+                            <div className="flex items-center gap-2">
+                                <p className="text-gray-900 font-semibold text-base tracking-wide whitespace-nowrap">ZEM STUDIOS</p>
                             </div>
                         </Link>
                     </div>
@@ -129,15 +126,15 @@ function Header() {
                             <NavigationMenuItem>
                                 <Link
                                     href="/"
-                                    className="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 px-3 py-2 font-medium hover:underline relative transition-colors duration-200 uppercase text-xs">
+                                    className="text-gray-900 hover:text-gray-600 px-3 py-2 font-medium transition-colors duration-200 text-sm">
                                     Home
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link
                                     href="/catalog"
-                                    className="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 px-3 py-2 font-medium relative hover:underline tracking-tight transition-colors duration-200 uppercase text-xs">
-                                    Catalog
+                                    className="text-gray-900 hover:text-gray-600 px-3 py-2 font-medium transition-colors duration-200 text-sm">
+                                    Shop
                                 </Link>
                             </NavigationMenuItem>
                         </NavigationMenuList>
@@ -156,7 +153,7 @@ function Header() {
                                     placeholder="Search..."
                                     value={searchQuery}
                                     onChange={handleSearchChange}
-                    className={`transition-all duration-300 ease-in-out border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                    className={`transition-all duration-300 ease-in-out border border-gray-300 bg-white text-gray-900 rounded-none px-4 py-2 text-sm focus:outline-none focus:border-gray-900 ${
                                         isSearchExpanded
                                             ? "w-full opacity-100 transform scale-100"
                                             : "w-0 opacity-0 transform scale-95"
@@ -166,11 +163,11 @@ function Header() {
                                     variant="ghost"
                                     size="icon"
                                     onClick={toggleSearch}
-                                    className="flex items-center justify-center rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-700 absolute right-0 transition-all duration-200 hover:scale-105"
+                                    className="flex items-center justify-center rounded-none hover:bg-gray-100 focus:outline-none absolute right-0 transition-all duration-200"
                                     aria-label="Search">
                                     <MagnifyingGlassIcon
                                         weight="bold"
-                                        className="h-5 w-5 text-gray-900 dark:text-white"
+                                        className="h-5 w-5 text-gray-900"
                                     />
                                 </Button>
                             </div>
@@ -181,32 +178,22 @@ function Header() {
                             variant="ghost"
                             size="icon"
                             onClick={toggleSearch}
-                            className="md:hidden flex items-center justify-center rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-700 transition-all duration-200 hover:scale-105"
+                            className="md:hidden flex items-center justify-center rounded-none hover:bg-gray-100 focus:outline-none transition-all duration-200"
                             aria-label="Search">
                             <MagnifyingGlassIcon
                                 weight="bold"
-                                className="h-5 w-5 text-gray-900 dark:text-white"
+                                className="h-5 w-5 text-gray-900"
                             />
-                        </Button>
-
-                        {/* Cart Icon */}
-                        {/* Theme toggle */}
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={toggleTheme}
-                            className="flex items-center justify-center rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-700 transition-all duration-200 hover:scale-105">
-                            <span className="text-sm">{isDark ? "🌙" : "🌞"}</span>
                         </Button>
 
                         <Button
                             variant="ghost"
                             size="icon"
                             onClick={() => router.push("/cart")}
-                            className="relative flex items-center justify-center rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-700 transition-all duration-200 hover:scale-105 group">
+                            className="relative flex items-center justify-center rounded-none hover:bg-gray-100 focus:outline-none transition-all duration-200 group">
                             <ShoppingBagIcon
                                 weight="bold"
-                                className="h-5 w-5 text-gray-900 dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-200"
+                                className="h-5 w-5 text-gray-900 group-hover:text-gray-600 transition-colors duration-200"
                             />
                             {/* Cart Badge */}
                             {cartCount > 0 && (
@@ -225,13 +212,13 @@ function Header() {
                             ? "max-h-20 opacity-100"
                             : "max-h-0 opacity-0"
                     }`}>
-                    <div className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-black px-4 py-3">
+                    <div className="border-t border-gray-200 bg-white px-4 py-3">
                         <input
                             type="text"
                             placeholder="Search..."
                             value={searchQuery}
                             onChange={handleSearchChange}
-                            className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full border border-gray-300 bg-white text-gray-900 rounded-none px-4 py-2 text-sm focus:outline-none focus:border-gray-900"
                         />
                     </div>
                 </div>
@@ -249,7 +236,7 @@ function Header() {
                                 <Link
                                     href="/"
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="block py-2 text-xs uppercase font-medium text-white rounded-md transition-all duration-200 transform">
+                                    className="block py-2 text-sm font-medium text-gray-900 rounded-none transition-all duration-200">
                                     Home
                                 </Link>
                             </NavigationMenuItem>
@@ -257,8 +244,8 @@ function Header() {
                                 <Link
                                     href="/catalog"
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="block py-2 uppercase font-medium text-white rounded-md transition-all duration-200 transform text-xs">
-                                    Catalog
+                                    className="block py-2 font-medium text-gray-900 rounded-none transition-all duration-200 text-sm">
+                                    Shop
                                 </Link>
                             </NavigationMenuItem>
                         </NavigationMenuList>

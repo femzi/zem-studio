@@ -13,7 +13,7 @@ export default function Home() {
                 <div 
                     className="min-h-96 sm:min-h-[500px] flex items-center justify-center relative"
                     style={{
-                        backgroundImage: 'url(/zem-t.JPG)',
+                        backgroundImage: "url('/zem-t 1.svg')",
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
@@ -47,7 +47,7 @@ export default function Home() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-12">Featured Collection</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {products.slice(0, 6).map((product: ProductT) => (
+                        {products.slice(0, 5).map((product: ProductT) => (
                             <Product
                                 key={product.id}
                                 id={product.id}

@@ -115,7 +115,7 @@ function Header() {
                     <div className="flex-shrink-0 flex items-center md:static absolute left-1/2 transform max-md:-translate-x-1/2 md:transform-none">
                         <Link href="/" className="flex items-center justify-center group">
                             <div className="flex items-center gap-2">
-                                <p className="text-gray-900 font-semibold text-base tracking-wide whitespace-nowrap">ZEM STUDIOS</p>
+                                <p className="text-gray-900 font-bold text-lg font-display tracking-wide whitespace-nowrap">ZEM STUDIOS</p>
                             </div>
                         </Link>
                     </div>

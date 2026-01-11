@@ -18,7 +18,7 @@ export default function CatalogContent() {
     return (
         <section className="w-full bg-white py-16 sm:py-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-12">Catalog</h2>
+                <h2 className="text-4xl sm:text-5xl font-bold font-display text-gray-900 mb-12">Catalog</h2>
 
                 {searchQuery && (
                     <p className="text-sm text-gray-600 mb-6">Showing results for "{searchQuery}" ({filteredProducts.length} products)</p>

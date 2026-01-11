@@ -31,7 +31,7 @@ function Product({ id, image, title, price, alt }: ProductProps) {
 
                 {/* Product info */}
                 <div className="pt-5 space-y-1">
-                    <h3 className="text-sm font-medium text-gray-900 line-clamp-2 group-hover:text-gray-600 transition-colors">
+                    <h3 className="text-base font-semibold text-gray-900 line-clamp-2 group-hover:text-gray-600 transition-colors">
                         {title}
                     </h3>
                     <p className="text-sm font-semibold text-gray-900">

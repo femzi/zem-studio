@@ -45,7 +45,7 @@ export default function Home() {
             {/* Featured Products Section */}
             <section id="featured" className="w-full bg-white py-16 sm:py-24">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-12">Featured Collection</h2>
+                    <h2 className="text-4xl sm:text-5xl font-bold font-display text-gray-900 mb-12">Featured Collection</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {products.slice(0, 5).map((product: ProductT) => (
                             <Product
@@ -63,7 +63,7 @@ export default function Home() {
             {/* Newsletter Section */}
             <section className="w-full bg-gray-50 border-t border-gray-200 py-16 sm:py-24">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h3 className="text-3xl font-light text-gray-900 mb-4">Stay Updated</h3>
+                    <h3 className="text-3xl sm:text-4xl font-bold font-display text-gray-900 mb-4">Stay Updated</h3>
                     <p className="text-gray-600 mb-8">Subscribe to our newsletter for new releases and exclusive offers.</p>
                     <form className="flex flex-col sm:flex-row gap-3">
                         <input

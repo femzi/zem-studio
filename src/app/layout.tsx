@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { Work_Sans, DM_Mono } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { SearchProvider } from "@/contexts/SearchContext";
 import { Toaster } from "@/components/ui/sonner";
 
-const workSans = Work_Sans({
-    variable: "--font-work-sans",
+const inter = Inter({
+    variable: "--font-inter",
     subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
 });
 
-const dmMono = DM_Mono({
-    variable: "--font-dm-mono",
+const playfairDisplay = Playfair_Display({
+    variable: "--font-playfair",
     subsets: ["latin"],
-    weight: "400",
+    weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${workSans.variable} ${dmMono.variable} antialiased`}>
+                className={`${inter.variable} ${playfairDisplay.variable} antialiased`}>
                 <SearchProvider>{children}</SearchProvider>
                 <Toaster
                     toastOptions={{

@@ -25,7 +25,7 @@ function Footer() {
                         <div>
                             <h3 className="text-sm font-semibold text-gray-900 mb-4">Support</h3>
                             <ul className="space-y-2">
-                                <li><Link href="#" className="text-sm text-gray-600 hover:text-gray-900">Contact</Link></li>
+                                <li><Link href="/contact" className="text-sm text-gray-600 hover:text-gray-900">Contact</Link></li>
                                 <li><Link href="/policies/shipping-policy" className="text-sm text-gray-600 hover:text-gray-900">Shipping</Link></li>
                             </ul>
                         </div>

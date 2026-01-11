@@ -117,32 +117,24 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-white text-gray-900 antialiased;
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
-    /* Light mode background (default) */
-    background-image: url('/bg.JPG');
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center;
-  }
-
-  /* Dark mode: use the Zem logo as the background. */
-  .dark body {
-    background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.35) 100%), url('/zem logo.JPG');
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center;
   }
 
   /* Headings and links for a modern aesthetic */
   h1, h2, h3, h4 {
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: -0.01em;
   }
   a {
-    @apply text-white/90 hover:text-white;
+    @apply text-gray-900 hover:text-gray-600 transition-colors duration-200;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 }

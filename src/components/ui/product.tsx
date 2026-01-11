@@ -17,11 +17,11 @@ function Product({ id, image, title, price, alt }: ProductProps) {
         <Link href={'/product/' + id} className="group block">
             <div className="w-full">
                 {/* Image container */}
-                <div className="aspect-square w-full overflow-hidden relative bg-gray-100 border border-gray-200">
+                <div className="aspect-square w-full overflow-hidden relative bg-gray-100 border border-gray-200 transition-all duration-300 group-hover:border-gray-300 group-hover:shadow-xl">
                     <Image
                         src={image}
                         alt={alt || title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         loading="lazy"
@@ -30,11 +30,11 @@ function Product({ id, image, title, price, alt }: ProductProps) {
                 </div>
 
                 {/* Product info */}
-                <div className="pt-5 space-y-1">
+                <div className="pt-6 space-y-2">
                     <h3 className="text-base font-semibold text-gray-900 line-clamp-2 group-hover:text-gray-600 transition-colors">
                         {title}
                     </h3>
-                    <p className="text-sm font-semibold text-gray-900">
+                    <p className="text-sm font-bold text-gray-900 tracking-wide">
                         ₦{typeof price === 'number' ? price.toLocaleString() : price}
                     </p>
                 </div>

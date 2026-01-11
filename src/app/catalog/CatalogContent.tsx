@@ -15,57 +15,33 @@ export default function CatalogContent() {
             product.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    // Sort filtered products by category
-    const sortedProducts = filteredProducts.sort((a, b) =>
-        a.category.localeCompare(b.category)
-    );
-
-    // Group products by category
-    const groupedProducts = sortedProducts.reduce((acc, product) => {
-        if (!acc[product.category]) {
-            acc[product.category] = [];
-        }
-        acc[product.category].push(product);
-        return acc;
-    }, {} as Record<string, typeof products>);
-
     return (
-        <>
-            {searchQuery && (
-                <div className="px-8 sm:px-16 md:px-32 py-4">
-                    <p className="text-sm text-gray-600">
-                        Showing results for &quot;{searchQuery}&quot; (
-                        {filteredProducts.length} products)
-                    </p>
-                </div>
-            )}
-            {Object.entries(groupedProducts).map(
-                ([category, categoryProducts]) => (
-                    <div key={category}>
-                        <h1 className="uppercase px-8 sm:px-16 md:px-32 py-1 font-semibold font-mono tracking-tight text-lg text-gray-900 dark:text-white">
-                            {category}
-                        </h1>
-                        <div className="grid grid-cols-2 gap-8 sm:gap-16 md:grid-cols-3 px-8 sm:px-16 md:px-32 md:py-12 py-4">
-                            {categoryProducts.map((product) => (
-                                <Product
-                                    key={product.id}
-                                    id={product.id}
-                                    title={product.title}
-                                    price={product.price}
-                                    image={product.image}
-                                />
-                            ))}
-                        </div>
+        <section className="w-full bg-white py-16 sm:py-24">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-12">Catalog</h2>
+
+                {searchQuery && (
+                    <p className="text-sm text-gray-600 mb-6">Showing results for "{searchQuery}" ({filteredProducts.length} products)</p>
+                )}
+
+                {filteredProducts.length === 0 ? (
+                    <div className="py-8 text-center">
+                        <p className="text-gray-500">No products found matching "{searchQuery}"</p>
                     </div>
-                )
-            )}
-            {filteredProducts.length === 0 && searchQuery && (
-                <div className="px-8 sm:px-16 md:px-32 py-8 text-center h-[80dvh] flex items-center justify-center">
-                    <p className="text-gray-500">
-                        No products found matching &quot;{searchQuery}&quot;
-                    </p>
-                </div>
-            )}
-        </>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {filteredProducts.map((product) => (
+                            <Product
+                                key={product.id}
+                                id={product.id}
+                                title={product.title}
+                                price={product.price}
+                                image={product.image}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </section>
     );
 }

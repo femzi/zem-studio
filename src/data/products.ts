@@ -8,10 +8,10 @@ export interface ProductT {
 
 const products: ProductT[] = [
     // Five featured items first
-    { id: "zem-odyssey-01-polo-black", title: "Zem- ODYSSEY 01 Polo (Black)", price: 25000, image: "/Zem- ODYSSEY 01 Polo (Black).svg", category: "All" },
-    { id: "zem-odyssey-01-polo-gray", title: "Zem- ODYSSEY 01 Polo (Gray)", price: 25000, image: "/Zem- ODYSSEY 01 Polo (Gray).svg", category: "All" },
-    { id: "zem-odyssey-01-polo-pink", title: "Zem- ODYSSEY 01 Polo (Pink)", price: 25000, image: "/Zem- ODYSSEY 01 Polo (Pink).svg", category: "All" },
-    { id: "zem-odyssey-01-polo-purple", title: "Zem- ODYSSEY 01 Polo (Purple)", price: 25000, image: "/Zem- ODYSSEY 01 Polo (Purple).svg", category: "All" },
+    { id: "zem-odyssey-01-polo-black", title: "Zem- ODYSSEY 01 Polo (Black)", price: 25000, image: "/Zem-%20ODYSSEY%2001%20Polo%20%28Black%29.svg", category: "All" },
+    { id: "zem-odyssey-01-polo-gray", title: "Zem- ODYSSEY 01 Polo (Gray)", price: 25000, image: "/Zem-%20ODYSSEY%2001%20Polo%20%28Gray%29.svg", category: "All" },
+    { id: "zem-odyssey-01-polo-pink", title: "Zem- ODYSSEY 01 Polo (Pink)", price: 25000, image: "/Zem-%20ODYSSEY%2001%20Polo%20%28Pink%29.svg", category: "All" },
+    { id: "zem-odyssey-01-polo-purple", title: "Zem- ODYSSEY 01 Polo (Purple)", price: 25000, image: "/Zem-%20ODYSSEY%2001%20Polo%20%28Purple%29.svg", category: "All" },
     { id: "girls-trendsetter-tee-black", title: "Girls TRENDSETTER TEE (Black)", price: 10000, image: "/Girls TRENDSETTER TEE (Black).svg", category: "All" },
 
     // All other SVGs in public/ — added to catalog using their exact file names as titles

@@ -46,7 +46,7 @@ function Footer() {
                             <h3 className="text-sm font-semibold text-gray-900 mb-4">Follow</h3>
                             <div className="flex items-center space-x-4">
                                 <Link
-                                    href="https://instagram.com"
+                                    href="https://www.instagram.com/zempmc/?igsh=MmQ0endreGhpajVn&utm_source=qr"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-gray-600 hover:text-gray-900 transition-colors duration-200"

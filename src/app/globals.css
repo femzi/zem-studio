@@ -125,9 +125,9 @@
     min-height: 100vh;
   }
 
-  /* Typography hierarchy */
+  /* Typography hierarchy - modern futuristic look */
   h1 {
-    @apply text-5xl sm:text-6xl md:text-7xl font-bold font-display tracking-tight;
+    @apply text-5xl sm:text-6xl md:text-7xl font-bold font-display tracking-tighter -space-x-0.5;
   }
 
   h2 {

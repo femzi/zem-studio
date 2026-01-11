@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SearchProvider } from "@/contexts/SearchContext";
 import { Toaster } from "@/components/ui/sonner";
 
-const inter = Inter({
-    variable: "--font-inter",
+const spaceGrotesk = Space_Grotesk({
+    variable: "--font-sans",
     subsets: ["latin"],
     weight: ["400", "500", "600", "700"],
+    display: "swap",
 });
 
-const playfairDisplay = Playfair_Display({
-    variable: "--font-playfair",
+const geistMono = Geist_Mono({
+    variable: "--font-display",
     subsets: ["latin"],
-    weight: ["400", "500", "600", "700"],
+    display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +31,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${inter.variable} ${playfairDisplay.variable} antialiased`}>
+                className={`${spaceGrotesk.variable} ${geistMono.variable} antialiased`}>
                 <SearchProvider>{children}</SearchProvider>
                 <Toaster
                     toastOptions={{

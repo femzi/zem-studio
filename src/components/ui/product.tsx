@@ -18,15 +18,15 @@ function Product({ id, image, title, price, alt }: ProductProps) {
             <div className="w-full">
                 {/* Image container */}
                 <div className="aspect-square w-full overflow-hidden relative bg-gray-100 border border-gray-200 transition-all duration-300 group-hover:border-gray-300 group-hover:shadow-xl">
-                    <Image
-                        src={image}
-                        alt={alt || title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        loading="lazy"
-                        priority={false}
-                    />
+                        <Image
+                            src={typeof image === 'string' ? encodeURI(image) : image}
+                            alt={alt || title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            loading="lazy"
+                            priority={false}
+                        />
                 </div>
 
                 {/* Product info */}

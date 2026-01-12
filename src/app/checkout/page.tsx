@@ -34,15 +34,7 @@ export default function CheckoutPage() {
     const [isProcessing, setIsProcessing] = useState(false);
 
     useEffect(() => {
-        // If user selected specific items in cart, use those for checkout
-        const selected = localStorage.getItem("checkoutSelectedItems");
-        if (selected) {
-            try {
-                const parsed = JSON.parse(selected);
-                setCartItems(parsed);
-                return;
-            } catch (e) {
-                console.error("Failed to parse checkoutSelectedItems", e);
+ 
             }
         }
 
@@ -183,8 +175,7 @@ export default function CheckoutPage() {
 
                         // Clear cart
                         localStorage.removeItem("cart");
-                        localStorage.removeItem("checkoutSelectedItems");
-
+ 
                         toast.success(`Order placed successfully! Reference: ${reference}. Redirecting...`);
                         setTimeout(() => (window.location.href = "/"), 2000);
                                 } catch (error) {

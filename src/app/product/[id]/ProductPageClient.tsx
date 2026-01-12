@@ -92,8 +92,7 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
                         NGN {price.toFixed(2)}
                     </h2>
                     <div className="mt-3">
-                        <StockBadge inStock={true} />
-                    </div>
+ 
                     <div className="flex flex-col gap-4 py-8">
                         <div className="space-y-2">
                             <Label

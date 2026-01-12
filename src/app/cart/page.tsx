@@ -30,13 +30,7 @@ export default function CartPage() {
         const loadCart = () => {
             const cart = JSON.parse(localStorage.getItem("cart") || "[]");
             setCartItems(cart);
-            // initialize selected map (default: all selected)
-            const initialSelected: Record<string, boolean> = {};
-            cart.forEach((item: any) => {
-                const key = `${item.id}-${item.size}`;
-                initialSelected[key] = true;
-            });
-            setSelected(initialSelected);
+ 
         };
 
         loadCart();
@@ -63,6 +57,15 @@ export default function CartPage() {
 
         setCartItems(updatedCart);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
+        // update selection map to remove any deselected items if removed
+        const key = `${id}-${size}`;
+        setSelected((s) => {
+            const copy = { ...s };
+            if (!updatedCart.find((it) => `${it.id}-${it.size}` === key)) {
+                delete copy[key];
+            }
+            return copy;
+        });
         window.dispatchEvent(new Event("storage"));
     };
 
@@ -108,16 +111,7 @@ export default function CartPage() {
                             <input
                                 type="checkbox"
                                 checked={
-                                    cartItems.length > 0 && cartItems.every((item) => selected[`${item.id}-${item.size}`])
-                                }
-                                onChange={(e) => {
-                                    const checked = e.target.checked;
-                                    const newSel: Record<string, boolean> = {};
-                                    cartItems.forEach((item) => {
-                                        newSel[`${item.id}-${item.size}`] = checked;
-                                    });
-                                    setSelected(newSel);
-                                }}
+ 
                             />
                         </TableHead>
                         <TableHead>Product</TableHead>
@@ -134,10 +128,7 @@ export default function CartPage() {
                                 <input
                                     type="checkbox"
                                     checked={!!selected[`${item.id}-${item.size}`]}
-                                    onChange={(e) => {
-                                        const key = `${item.id}-${item.size}`;
-                                        setSelected((prev) => ({ ...prev, [key]: e.target.checked }));
-                                    }}
+ 
                                 />
                             </TableCell>
                             <TableCell>
@@ -223,18 +214,7 @@ export default function CartPage() {
                             </span>
                         </div>
                         <Button
-                            onClick={() => {
-                                const selectedItems = cartItems.filter((item) => selected[`${item.id}-${item.size}`]);
-                                if (selectedItems.length === 0) {
-                                    alert("Please select at least one item to checkout.");
-                                    return;
-                                }
-                                localStorage.setItem("checkoutSelectedItems", JSON.stringify(selectedItems));
-                                router.push("/checkout");
-                            }}
-                            className="w-full bg-amber-500 text-white tracking-widest rounded-none uppercase font-mono py-3 hover:bg-white hover:text-black">
-                            Proceed to Checkout
-                        </Button>
+ 
                         <Link href={"/"}>
                             <Button
                                 variant="outline"

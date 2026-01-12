@@ -96,6 +96,10 @@ function Header() {
 
     return (
         <header className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-md">
+            {/* Full-width announcement banner (visible on all screens) */}
+            <div className="w-full bg-black text-white text-center text-sm uppercase tracking-widest py-2">
+                WORLDWIDE SHIPPING
+            </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 relative">
                     {/* Menu Button (Mobile) */}
@@ -150,9 +154,6 @@ function Header() {
                     {/* Search, Cart, and Actions */}
                     <div className="flex items-center space-x-1 z-10 relative">
                         {/* Sticky announcement badge (fixed top-right on small screens and up) */}
-                        <div className="hidden sm:flex fixed top-4 right-4 z-50 bg-black text-white text-xs uppercase tracking-widest px-3 py-1 rounded shadow-lg">
-                            WORLDWIDE SHIPPING
-                        </div>
                         {/* Search Bar - Desktop */}
                         <div className="relative hidden md:block">
                             <div

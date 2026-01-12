@@ -24,9 +24,6 @@ export default function Home() {
                     {/* Content */}
                     <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                         <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-display text-white mb-6 leading-tight">The Future Wears Zem</h1>
-                        <p className="text-lg sm:text-xl text-white/90 leading-relaxed">
-                            Cutting-edge apparel for the bold and creative. Engineered for impact.
-                        </p>
                         <div className="flex flex-col sm:flex-row gap-4 pt-10 justify-center">
                             <a
                                 href="/catalog"
@@ -47,10 +44,10 @@ export default function Home() {
             <section id="featured" className="w-full bg-white py-20 sm:py-32">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="mb-16">
-                        <h2 className="text-4xl sm:text-5xl font-bold font-display text-gray-900 mb-4">Featured Collection</h2>
+                        <h2 className="text-4xl sm:text-5xl font-bold font-display text-gray-900 mb-4">Prologue</h2>
                         <div className="w-16 h-1 bg-gray-900"></div>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {products.slice(0, 5).map((product: ProductT) => (
                             <Product
                                 key={product.id}

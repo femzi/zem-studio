@@ -141,7 +141,11 @@ function Header() {
                     </NavigationMenu>
 
                     {/* Search, Cart, and Actions */}
-                    <div className="flex items-center space-x-1 z-10">
+                    <div className="flex items-center space-x-1 z-10 relative">
+                        {/* Small announcement badge above icons (visible on sm+) */}
+                        <div className="hidden sm:flex absolute -top-6 right-0 bg-black text-white text-xs uppercase tracking-widest px-3 py-1 rounded">
+                            WORLDWIDE SHIPPING
+                        </div>
                         {/* Search Bar - Desktop */}
                         <div className="relative hidden md:block">
                             <div

@@ -23,7 +23,7 @@ const products: ProductT[] = [
 
     { id: "zem-001-double-waisted-black", title: "ZEM 001 Double Waisted (Black)", price: 15000, image: "/ZEM 001 Double Waisted (Black).svg", category: "All" },
     { id: "zem-001-double-waisted-brown", title: "ZEM 001 Double Waisted (Brown)", price: 15000, image: "/ZEM 001 Double Waisted (Brown).svg", category: "All" },
-    { id: "zem-001-double-waisted-gray", title: "ZEM 001 Double Waisted (Gray)", price: 15000, image: "/ZEM 001 Double Waisted (Gray).svg", category: "All" },
+    { id: "zem-001-double-waisted-gray", title: "ZEM 001 Double Waisted (Gray)", price: 15000, image: "/zem-001-double-waisted-gray.svg", category: "All" },
     { id: "zem-001-double-waisted-pink", title: "ZEM 001 Double Waisted (Pink)", price: 15000, image: "/ZEM 001 Double Waisted (Pink).svg", category: "All" },
     { id: "zem-001-double-waisted-purple", title: "ZEM 001 Double Waisted (Purple)", price: 15000, image: "/ZEM 001 Double Waisted (Purple).svg", category: "All" },
     { id: "zem-001-double-waisted-white", title: "ZEM 001 Double Waisted (White)", price: 15000, image: "/ZEM 001 Double Waisted (White).svg", category: "All" },

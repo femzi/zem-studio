@@ -8,10 +8,10 @@ export interface ProductT {
 
 const products: ProductT[] = [
     // Five featured items first
-    { id: "zem-odyssey-01-polo-black", title: "Zem- ODYSSEY 01 Polo (Black)", price: 25000, image: "/Zem- ODYSSEY 01 Polo (Black).svg", category: "All" },
-    { id: "zem-odyssey-01-polo-gray", title: "Zem- ODYSSEY 01 Polo (Gray)", price: 25000, image: "/Zem- ODYSSEY 01 Polo (Gray).svg", category: "All" },
-    { id: "zem-odyssey-01-polo-pink", title: "Zem- ODYSSEY 01 Polo (Pink)", price: 25000, image: "/Zem- ODYSSEY 01 Polo (Pink).svg", category: "All" },
-    { id: "zem-odyssey-01-polo-purple", title: "Zem- ODYSSEY 01 Polo (Purple)", price: 25000, image: "/Zem- ODYSSEY 01 Polo (Purple).svg", category: "All" },
+    { id: "zem-odyssey-01-polo-black", title: "Zem- ODYSSEY 01 Polo (Black)", price: 25000, image: "/ Zem- ODYSSEY 01 Polo (Black).svg", category: "All" },
+    { id: "zem-odyssey-01-polo-gray", title: "Zem- ODYSSEY 01 Polo (Gray)", price: 25000, image: "/ Zem- ODYSSEY 01 Polo (Gray).svg", category: "All" },
+    { id: "zem-odyssey-01-polo-pink", title: "Zem- ODYSSEY 01 Polo (Pink)", price: 25000, image: "/ Zem- ODYSSEY 01 Polo (Pink).svg", category: "All" },
+    { id: "zem-odyssey-01-polo-purple", title: "Zem- ODYSSEY 01 Polo (Purple)", price: 25000, image: "/ Zem- ODYSSEY 01 Polo (Purple).svg", category: "All" },
     { id: "girls-trendsetter-tee-black", title: "Girls TRENDSETTER TEE (Black)", price: 10000, image: "/Girls TRENDSETTER TEE (Black).svg", category: "All" },
 
     // All other SVGs in public/ — added to catalog using their exact file names as titles
@@ -50,8 +50,8 @@ const products: ProductT[] = [
     { id: "zem-street-republic-tee-purple", title: "ZEM Street Republic Tee (purple)", price: 10000, image: "/ZEM Street Republic Tee (purple).svg", category: "All" },
 
     // Additional duplicates / variations
-    { id: "zem-odyssey-01-polo-black-2", title: "Zem- ODYSSEY 01 Polo (Black)", price: 25000, image: "/Zem- ODYSSEY 01 Polo (Black).svg", category: "All" },
-    { id: "zem-odyssey-01-polo-brown", title: "Zem- ODYSSEY 01 Polo (Brown)", price: 25000, image: "/Zem- ODYSSEY 01 Polo (Brown).svg", category: "All" },
+    { id: "zem-odyssey-01-polo-black-2", title: "Zem- ODYSSEY 01 Polo (Black)", price: 25000, image: "/ Zem- ODYSSEY 01 Polo (Black).svg", category: "All" },
+    { id: "zem-odyssey-01-polo-brown", title: "Zem- ODYSSEY 01 Polo (Brown)", price: 25000, image: "/ Zem- ODYSSEY 01 Polo (Brown).svg", category: "All" },
 ];
 
 export { products };

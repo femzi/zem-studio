@@ -137,13 +137,20 @@ function Header() {
                                     Shop
                                 </Link>
                             </NavigationMenuItem>
+                            <NavigationMenuItem>
+                                <Link
+                                    href="/about"
+                                    className="text-gray-900 hover:text-gray-600 px-3 py-2 font-medium transition-colors duration-200 text-sm">
+                                    About
+                                </Link>
+                            </NavigationMenuItem>
                         </NavigationMenuList>
                     </NavigationMenu>
 
                     {/* Search, Cart, and Actions */}
                     <div className="flex items-center space-x-1 z-10 relative">
-                        {/* Small announcement badge above icons (visible on sm+) */}
-                        <div className="hidden sm:flex absolute -top-6 right-0 bg-black text-white text-xs uppercase tracking-widest px-3 py-1 rounded">
+                        {/* Sticky announcement badge (fixed top-right on small screens and up) */}
+                        <div className="hidden sm:flex fixed top-4 right-4 z-50 bg-black text-white text-xs uppercase tracking-widest px-3 py-1 rounded shadow-lg">
                             WORLDWIDE SHIPPING
                         </div>
                         {/* Search Bar - Desktop */}

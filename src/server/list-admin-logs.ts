@@ -18,7 +18,7 @@ export default async function listAdminLogs({ page = 1, limit = 20 }: Args = { p
     try {
         const offset = (page - 1) * limit;
         const result = await tablesDB.listRows({
-            databaseId: "main",
+            databaseId: "6962f8520000ac18a060",
             tableId: "admin_logs",
             queries: [Query.limit(limit), Query.offset(offset)],
         });

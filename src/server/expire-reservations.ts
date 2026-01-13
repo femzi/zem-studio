@@ -24,7 +24,7 @@ export default async function expireReservations() {
 
         while (true) {
             const res = await tablesDB.listRows({
-                databaseId: "main",
+                databaseId: "6962f8520000ac18a060",
                 tableId: "reservations",
                 queries: [Query.equal("status", "reserved"), Query.limit(limit), Query.offset(offset)],
             });

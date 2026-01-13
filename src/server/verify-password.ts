@@ -16,7 +16,7 @@ export default async function verifyPassword({ password }: Args) {
 
     try {
         const result = await tablesDB.listRows({
-            databaseId: "main",
+            databaseId: "6962f8520000ac18a060",
             tableId: "password",
             queries: [Query.limit(1)],
         });

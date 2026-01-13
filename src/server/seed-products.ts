@@ -24,7 +24,7 @@ export default async function seedProducts({ initialStock = 20 }: Args = {}) {
     const created: any[] = [];
     for (const p of products) {
       const row = await tablesDB.createRow({
-        databaseId: "main",
+        databaseId: "6962f8520000ac18a060",
         tableId: "products",
         rowId: ID.unique(),
         data: {

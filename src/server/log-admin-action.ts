@@ -24,7 +24,7 @@ export default async function logAdminAction({ action, details }: Args) {
         const tablesDB = new TablesDB(client);
 
         await tablesDB.createRow({
-            databaseId: "main",
+            databaseId: "6962f8520000ac18a060",
             tableId: "admin_logs",
             rowId: ID.unique(),
             data: {

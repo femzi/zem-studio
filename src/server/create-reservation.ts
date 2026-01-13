@@ -32,7 +32,7 @@ export default async function createReservation({ items, holdMinutes = 15 }: Arg
     try {
         for (const item of parsed) {
             const found = await tablesDB.listRows({
-                databaseId: "main",
+                databaseId: "6962f8520000ac18a060",
                 tableId: "products",
                 queries: [Query.equal("id", item.id), Query.limit(1)],
             });
@@ -51,13 +51,13 @@ export default async function createReservation({ items, holdMinutes = 15 }: Arg
                 for (const u of updatedProducts) {
                     try {
                         const r = await tablesDB.getRow({
-                            databaseId: "main",
+                            databaseId: "6962f8520000ac18a060",
                             tableId: "products",
                             rowId: u.rowId,
                         });
                         const curReserved = Number((r as any).reserved ?? 0);
                         await tablesDB.updateRow({
-                            databaseId: "main",
+                            databaseId: "6962f8520000ac18a060",
                             tableId: "products",
                             rowId: u.rowId,
                             data: { reserved: Math.max(0, curReserved - u.qty) },
@@ -72,7 +72,7 @@ export default async function createReservation({ items, holdMinutes = 15 }: Arg
 
             // increment reserved
             await tablesDB.updateRow({
-                databaseId: "main",
+                databaseId: "6962f8520000ac18a060",
                 tableId: "products",
                 rowId: prod.$id,
                 data: { reserved: reserved + item.quantity },
@@ -84,7 +84,7 @@ export default async function createReservation({ items, holdMinutes = 15 }: Arg
         // create reservation row
         const expiresAt = Date.now() + holdMinutes * 60 * 1000;
         const reservation = await tablesDB.createRow({
-            databaseId: "main",
+            databaseId: "6962f8520000ac18a060",
             tableId: "reservations",
             rowId: ID.unique(),
             data: {

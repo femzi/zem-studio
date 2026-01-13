@@ -17,7 +17,7 @@ export default async function listOrders({ page, limit = 10 }: Args) {
 
     try {
         const result = await tablesDB.listRows({
-            databaseId: "main",
+            databaseId: "6962f8520000ac18a060",
             tableId: "orders",
             queries: [Query.limit(limit), Query.offset((page - 1) * limit)],
         });

@@ -25,7 +25,7 @@ interface Args {
  * creates the order row in 'orders' and decrements product stock.
  *
  * Requirements: your Appwrite project should have a `products` table in the
- * `main` database with rows that include a product `id` (matching the
+ * `6962f8520000ac18a060` database with rows that include a product `id` (matching the
  * product id in the app) and a numeric `stock` field. This action will
  * look up products by their `id` field.
  */
@@ -56,7 +56,7 @@ export default async function verifyAndCreateOrder({
         for (const item of parsedItems) {
             // find product row by the product id field
             const found = await tablesDB.listRows({
-                databaseId: "main",
+                databaseId: "6962f8520000ac18a060",
                 tableId: "products",
                 queries: [Query.equal("id", item.id), Query.limit(1)],
             });
@@ -84,7 +84,7 @@ export default async function verifyAndCreateOrder({
 
         // Step 2: create the order row
         const order = await tablesDB.createRow({
-            databaseId: "main",
+            databaseId: "6962f8520000ac18a060",
             tableId: "orders",
             rowId: ID.unique(),
             data: {
@@ -104,7 +104,7 @@ export default async function verifyAndCreateOrder({
         for (const p of productRowsToUpdate) {
             try {
                 await tablesDB.updateRow({
-                    databaseId: "main",
+                    databaseId: "6962f8520000ac18a060",
                     tableId: "products",
                     rowId: p.rowId,
                     data: { stock: p.newStock },

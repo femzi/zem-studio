@@ -26,7 +26,7 @@ export default async function finalizeReservation({ reservationId, customerName 
     const tablesDB = new TablesDB(client);
 
     try {
-        const res = await tablesDB.getRow({ databaseId: "main", tableId: "reservations", rowId: reservationId });
+        const res = await tablesDB.getRow({ databaseId: "6962f8520000ac18a060", tableId: "reservations", rowId: reservationId });
         if (!res) throw new Error("Reservation not found");
         const reservation = res as any;
         if (reservation.status !== "reserved") {
@@ -37,7 +37,7 @@ export default async function finalizeReservation({ reservationId, customerName 
 
         // Decrement stock and reserved for each product
         for (const item of items) {
-            const found = await tablesDB.listRows({ databaseId: "main", tableId: "products", queries: [Query.equal("id", item.id), Query.limit(1)] });
+            const found = await tablesDB.listRows({ databaseId: "6962f8520000ac18a060", tableId: "products", queries: [Query.equal("id", item.id), Query.limit(1)] });
             if (!found.rows || found.rows.length === 0) {
                 throw new Error(`Product not found: ${item.id}`);
             }
@@ -48,12 +48,11 @@ export default async function finalizeReservation({ reservationId, customerName 
             const newStock = Math.max(0, stock - item.quantity);
             const newReserved = Math.max(0, reserved - item.quantity);
 
-            await tablesDB.updateRow({ databaseId: "main", tableId: "products", rowId: prod.$id, data: { stock: newStock, reserved: newReserved } });
+            await tablesDB.updateRow({ databaseId: "6962f8520000ac18a060", tableId: "products", rowId: prod.$id, data: { stock: newStock, reserved: newReserved } });
         }
 
         // create order
-        const order = await tablesDB.createRow({ databaseId: "main", tableId: "orders", rowId: ID.unique(), data: { customerName, phone, email, street, city, state, zipCode, items, status: "Processing" } });
-
+        const order = await tablesDB.createRow({ databaseId: "6962f8520000ac18a060", tableId: "orders", rowId: ID.unique(), data: { customerName, phone, email, street, city, state, zipCode, items, status: "Processing" } });
         // mark reservation finalized
         await tablesDB.updateRow({ databaseId: "main", tableId: "reservations", rowId: reservationId, data: { status: "finalized", finalizedAt: Date.now(), orderId: order.$id } });
 

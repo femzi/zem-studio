@@ -17,7 +17,7 @@ export default async function changeOrderStatus({ orderId, status }: Args) {
 
     try {
         const result = await tablesDB.updateRow({
-            databaseId: "main",
+            databaseId: "6962f8520000ac18a060",
             tableId: "orders",
             rowId: orderId,
             data: { status },

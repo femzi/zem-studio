@@ -18,6 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { payWithPayStack } from "../lib/utils";
+import createOrder from "@/server/create-order";
 // server operations are performed via API endpoints
 // verifyAndCreateOrder is intentionally unused here; reservation flow is used instead
 
@@ -101,128 +102,50 @@ export default function CheckoutPage() {
         return true;
     };
 
-    async function handlePlaceOrder() {
-        if (!validateForm()) {
+     function handlePlaceOrder() {
+        if (
+            !firstName.trim() ||
+            !lastName.trim() ||
+            !email.trim() ||
+            !phone.trim() ||
+            !address.trim() ||
+            !city.trim() ||
+            !state.trim() ||
+            !zipCode.trim()
+        ) {
+            toast.error("Please fill in all required fields.");
             return;
         }
-
-        // Check if cart is empty
-        if (cartItems.length === 0) {
-            toast.error("Your cart is empty. Please add items before checkout.");
-            return;
-        }
-
-        // Reservation + payment + finalize flow:
-        setIsProcessing(true);
-        toast.loading("Reserving items...");
-
-        // 1) create reservation via API
-        const reservationRes = await fetch("/api/checkout/reserve", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                items: JSON.stringify(
-                    cartItems.map(({ id, size, quantity }) => ({ id, size, quantity }))
-                ),
-                holdMinutes: 15,
-            }),
-        }).then((r) => r.json());
-
-        if (!reservationRes || reservationRes.success === false) {
-            toast.error(reservationRes?.message || "Failed to reserve items. Try again.");
-            setIsProcessing(false);
-            return;
-        }
-
-        const reservationId = reservationRes.reservationId;
-        if (!reservationId) {
-            toast.error("Failed to reserve items (no reservation id). Please try again.");
-            setIsProcessing(false);
-            return;
-        }
-        toast.success("Items reserved. Complete payment to finalize.");
-
-        try {
-            // Pass reservation id in metadata so it's available in callback if needed
-                        payWithPayStack(
-                total,
-                { email, firstName, lastName, tel: phone },
-                async (reference: string) => {
-                    try {
-                        // finalize reservation -> creates order and decrements stock
-                                    const finalizeRes = await fetch("/api/checkout/finalize", {
-                                        method: "POST",
-                                        headers: { "Content-Type": "application/json" },
-                                        body: JSON.stringify({
-                                            reservationId,
-                                            customerName: `${firstName.charAt(0).toUpperCase() + firstName.slice(1)} ${lastName.charAt(0).toUpperCase() + lastName.slice(1)}`,
-                                            phone,
-                                            email,
-                                            state: state.charAt(0).toUpperCase() + state.slice(1),
-                                            street: address.charAt(0).toUpperCase() + address.slice(1),
-                                            city: city.charAt(0).toUpperCase() + city.slice(1),
-                                            zipCode,
-                                        }),
-                                    }).then((r) => r.json());
-
-                        if (!finalizeRes || finalizeRes.success === false) {
-                            // finalize failed — notify and cancel reservation to release stock
-                            toast.error(finalizeRes?.message || "Failed to finalize order after payment. Contact support.");
-                            try {
-                                await fetch("/api/checkout/cancel", {
-                                    method: "POST",
-                                    headers: { "Content-Type": "application/json" },
-                                    body: JSON.stringify({ reservationId }),
-                                });
-                            } catch (e) {
-                                console.error("Failed to cancel reservation after finalize failure:", e);
-                            }
-                            setIsProcessing(false);
-                            return;
-                        }
-
-                        // Clear cart
-                        localStorage.removeItem("cart");
-                        localStorage.removeItem("checkoutSelectedItems");
-
-                        toast.success(`Order placed successfully! Reference: ${reference}. Redirecting...`);
-                        setTimeout(() => (window.location.href = "/"), 2000);
-                                } catch (error) {
-                        console.error("Error finalizing reservation:", error);
-                        toast.error("Order finalized failed. Please contact support with reference: " + reference);
-                        setIsProcessing(false);
-                    }
-                },
-                async (error: string) => {
-                    // Payment failed or cancelled — cancel reservation to release stock
-                    toast.error(error || "Payment failed or cancelled.");
-                    try {
-                        await fetch("/api/checkout/cancel", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ reservationId }),
-                        });
-                    } catch (e) {
-                        console.error("Failed to cancel reservation after payment failure:", e);
-                    }
-                    setIsProcessing(false);
-                }
-            );
-        } catch (error) {
-            console.error("Payment error:", error);
-            // cancel reservation if anything goes wrong
-            try {
-                await fetch("/api/checkout/cancel", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ reservationId }),
+        // ...place order logic here...
+        payWithPayStack(
+            total,
+            { email, firstName, lastName, tel: phone },
+            async () => {
+                await createOrder   ({
+                    customerName: `${
+                        firstName.charAt(0).toUpperCase() + firstName.slice(1)
+                    } ${lastName.charAt(0).toUpperCase() + lastName.slice(1)}`,
+                    phone,
+                    email,
+                    state: state.charAt(0).toUpperCase() + state.slice(1),
+                    street: address.charAt(0).toUpperCase() + address.slice(1),
+                    city: city.charAt(0).toUpperCase() + city.slice(1),
+                    zipCode,
+                    items: JSON.stringify(
+                        cartItems.map(({ id, size, quantity }) => {
+                            return { id, size, quantity };
+                        })
+                    ),
+                    status: "Processing",
                 });
-            } catch (e) {
-                console.error("Failed to cancel reservation after unexpected payment error:", e);
+                localStorage.removeItem("cart");
+                window.location.href = "/";
+                toast.success("Your order has been placed successfully.");
+            },
+            () => {
+                toast.error("Payment was not successful. Please try again.");
             }
-            toast.error("An unexpected error occurred. Please try again.");
-            setIsProcessing(false);
-        }
+        );
     }
 
     return (
